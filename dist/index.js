@@ -13,11 +13,9 @@ const action = async (input, output) => {
         owner: input.owner,
         repo: input.repo
     });
-    const releases = data.filter(release => {
-        return !input.excludes.some(exclude => !release[exclude]);
-    });
+    const releases = data.filter(release => input.excludes.some(exclude => !release[exclude]));
     if (releases.length === 0) {
-        output.failed('No releases found');
+        throw new Error('No releases found');
     }
     const latest = releases[0];
     output.set('id', latest.id);
@@ -40,7 +38,7 @@ const core_1 = __nccwpck_require__(2186);
 const github_1 = __nccwpck_require__(5438);
 class Input {
     get owner() {
-        return (0, core_1.getInput)('respository').split('/')[0];
+        return (0, core_1.getInput)('repository').split('/')[0];
     }
     get repo() {
         return (0, core_1.getInput)('repository').split('/')[1];
