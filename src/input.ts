@@ -3,7 +3,7 @@ import {getOctokit} from '@actions/github'
 
 export class Input {
   get owner(): string {
-    return getInput('respository').split('/')[0]
+    return getInput('repository').split('/')[0]
   }
 
   get repo(): string {

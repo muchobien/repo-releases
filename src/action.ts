@@ -7,12 +7,12 @@ export const action = async (input: Input, output: Output): Promise<void> => {
     repo: input.repo
   })
 
-  const releases = data.filter(release => {
-    return !input.excludes.some(exclude => !release[exclude])
-  })
+  const releases = data.filter(release =>
+    input.excludes.some(exclude => !release[exclude])
+  )
 
   if (releases.length === 0) {
-    output.failed('No releases found')
+    throw new Error('No releases found')
   }
 
   const latest = releases[0]
